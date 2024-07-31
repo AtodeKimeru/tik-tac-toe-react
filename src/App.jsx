@@ -28,7 +28,7 @@ const WINNER_COMBOS = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
-  [O, 3, 6],
+  [0, 3, 6],
   [1, 4, 7],
   [2, 5, 8],
   [0, 4, 8],
@@ -46,7 +46,7 @@ function App() {
 
   
   const checkWinner = (boardToCheck) => {
-    for (const comb of WINNER_COMBOS) {
+    for (let comb of WINNER_COMBOS) {
       const [a, b, c] = comb
       if (
         boardToCheck[a] && 
@@ -62,18 +62,18 @@ function App() {
 
   const updateBoard = (index) => {
     // if the position have a value or there's a winner, won't update it
-    if (board[index] || winner ) return
+    if (board[index] || winner ) return;
     // update board
-    const newBoard = [...board]
-    newBoard[index] = turn
-    setBoard(newBoard)
+    const newBoard = [...board];
+    newBoard[index] = turn;
+    setBoard(newBoard);
     // change the turn
-    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
-    setTurn(newTurn)
+    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
+    setTurn(newTurn);
     // review if someone wins
-    const newWinner = checkWinner(newBoard)
+    const newWinner = checkWinner(newBoard);
     if (newWinner){
-      setWinner(newWinner)
+      setWinner(newWinner);
     }
   }
 
