@@ -45,6 +45,11 @@ function App() {
   const [winner, setWinner] = useState(null)
 
   
+  const checkEndGame = (newBoard) => {
+    return newBoard.every((item) => item != null)
+  }
+
+
   const checkWinner = (boardToCheck) => {
     for (let comb of WINNER_COMBOS) {
       const [a, b, c] = comb
@@ -74,23 +79,33 @@ function App() {
     const newWinner = checkWinner(newBoard);
     if (newWinner){
       setWinner(newWinner);
+    } else if (checkEndGame(newBoard)) {
+      setWinner(false);
     }
+  }
+
+
+  const resetGame = () => {
+    setBoard(Array(9).fill(null))
+    setTurn(TURNS.X)
+    setWinner(null)
   }
 
 
   return (
     <main className='board'>
       <h1>Tic tac toe</h1>
+      <button onClick={resetGame}>Reset juego</button>
       <section className='game'>
         {
-          board.map((_, index) => {
+          board.map((square, index) => {
             return (
               <Square 
               key={index} 
               index={index} 
               updateBoard={updateBoard}
               >
-                {board[index]}
+                {square}
               </Square>
             )
           })
@@ -122,12 +137,11 @@ function App() {
               </header>
 
               <footer>
-                <button>Empezar de nuevo</button>
+                <button onClick={resetGame}>Empezar de nuevo</button>
               </footer>
             </div>
           </section>
         }
-      }
     </main>
   );
 }
